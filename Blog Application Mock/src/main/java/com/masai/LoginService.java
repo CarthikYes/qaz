@@ -1,8 +1,8 @@
-package com.masai.service;
+package com.masai;
 
 import javax.security.auth.login.LoginException;
 
-import com.masai.entities.LoginDTO;
+import com.masai.LoginDTO;
 
 public interface LoginService {
 	public String logIntoAccount(LoginDTO dto) throws LoginException;

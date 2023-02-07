@@ -1,14 +1,14 @@
-package com.masai.serviceimpl;
+package com.masai;
 
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.masai.entities.Post;
-import com.masai.exception.PostException;
-import com.masai.repository.PostRepository;
-import com.masai.service.PostService;
+import com.masai.Post;
+import com.masai.PostException;
+import com.masai.PostRepository;
+import com.masai.PostService;
 
 
 @Service

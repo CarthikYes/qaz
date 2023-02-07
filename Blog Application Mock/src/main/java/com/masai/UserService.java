@@ -1,11 +1,8 @@
-package com.masai.service;
+package com.masai;
 
 import java.util.List;
 
-import com.masai.entities.User;
-import com.masai.exception.UserException;
-
-public interface IUserService {
+public interface UserService {
 	
 	public User addUser(User user) throws UserException;
 	

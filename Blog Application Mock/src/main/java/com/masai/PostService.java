@@ -1,9 +1,9 @@
-package com.masai.service;
+package com.masai;
 
 import java.util.List;
 
-import com.masai.entities.Post;
-import com.masai.exception.PostException;
+import com.masai.Post;
+import com.masai.PostException;
 
 public interface PostService {
 

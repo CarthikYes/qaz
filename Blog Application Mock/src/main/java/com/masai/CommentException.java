@@ -1,11 +1,7 @@
-package com.masai.exception;
+package com.masai;
 
 public class CommentException extends Exception{
 
-	public CommentException() {
-		// TODO Auto-generated constructor stub
-	}
-	
 	public CommentException(String m) {
 		super(m);
 	}

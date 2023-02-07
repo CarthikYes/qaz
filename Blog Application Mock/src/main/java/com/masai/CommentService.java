@@ -1,16 +1,12 @@
-package com.masai.service;
+package com.masai;
 
 import java.util.List;
 
-import com.masai.entities.Comment;
-import com.masai.exception.CommentException;
-import com.masai.exception.PostException;
-
 public interface CommentService {
 
-	public List<Comment> getAllComments() throws CommentException;
+	List<Comment> getAllComments() throws CommentException;
 	
-	public Comment getCommentByID(Long commentId) throws CommentException;
+	Comment getCommentByID(Long commentId) throws CommentException;
 	
 	public String addComment(Comment comment, Long postId) throws CommentException, PostException;
 	

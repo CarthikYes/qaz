@@ -1,25 +1,19 @@
-package com.masai.serviceimpl;
+package com.masai;
 
 import java.util.List;
+import java.util.Objects;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.masai.entities.CurrentUserSession;
-import com.masai.entities.User;
-import com.masai.exception.UserException;
-import com.masai.repository.SessionRepo;
-import com.masai.repository.UserRepo;
-import com.masai.service.IUserService;
-
 @Service
-public class IUserServiceImpl implements IUserService{
+public class UserServiceImpl implements UserService {
 	
 	@Autowired
 	private UserRepo uRepo;
 	
 	@Autowired
-	private SessionRepo srepo;
+	private SessionRepo K_repo;
 	
 	@Override
 	public User addUser(User user) throws UserException {
@@ -33,7 +27,7 @@ public class IUserServiceImpl implements IUserService{
 
 	@Override
 	public User updateUser(User user,String key) throws UserException {
-		CurrentUserSession loggedInUser=srepo.findByUuid(key);
+		CurrentUserSession loggedInUser=K_repo.findByUuid(key);
 		if(loggedInUser==null) {
 			throw new UserException("Please provide a valid key to update user");
 		}
@@ -46,20 +40,17 @@ public class IUserServiceImpl implements IUserService{
 			if (user.getLastName() != null) curr.setLastName(user.getLastName());
 			if (user.getPassword() != null) curr.setPassword(user.getPassword());
 			if (user.getUserName() != null) curr.setUserName(user.getUserName());
-			User saved = uRepo.save(curr);
-			return saved;
+			return uRepo.save(curr);
 		}
-		if(user.getUserLoginId()==loggedInUser.getUserId()) {
+		if(Objects.equals(user.getUserLoginId(), loggedInUser.getUserId())) {
 			if (user.getContact() != null) curr.setContact(user.getContact());
 			if (user.getEmail() != null) curr.setEmail(user.getEmail());
 			if (user.getFirstName() != null) curr.setFirstName(user.getFirstName());
 			if (user.getLastName() != null) curr.setLastName(user.getLastName());
 			if (user.getPassword() != null) curr.setPassword(user.getPassword());
 			if (user.getUserName() != null) curr.setUserName(user.getUserName());
-			
-			User saved = uRepo.save(curr);
-			
-			return saved;
+
+			return uRepo.save(curr);
 			
 		}
 		else throw new UserException("Access denied.");
@@ -68,7 +59,7 @@ public class IUserServiceImpl implements IUserService{
 
 	@Override
 	public User deleteUser(Integer userId,String key) throws UserException {
-		CurrentUserSession loggedInUser=srepo.findByUuid(key);
+		CurrentUserSession loggedInUser=K_repo.findByUuid(key);
 		if(loggedInUser==null) {
 			throw new UserException("Please provide a valid key to delete user.");
 		}
@@ -78,9 +69,9 @@ public class IUserServiceImpl implements IUserService{
 			uRepo.delete(u);
 			return u;
 		}
-		if(u.getUserLoginId()==loggedInUser.getUserId()) {
+		if(Objects.equals(u.getUserLoginId(), loggedInUser.getUserId())) {
 			uRepo.delete(u);
-			srepo.delete(loggedInUser);
+			K_repo.delete(loggedInUser);
 			return u;
 		}
 		else {
@@ -91,21 +82,19 @@ public class IUserServiceImpl implements IUserService{
 
 	@Override
 	public User viewUser(Integer userId,String key) throws UserException {
-		CurrentUserSession loggedInUser=srepo.findByUuid(key);
+		CurrentUserSession loggedInUser=K_repo.findByUuid(key);
 		if(loggedInUser==null) {
 			throw new UserException("Please provide a valid key to view user.");
 		}
 		if (loggedInUser.getType().equalsIgnoreCase("Admin")) {
-			
-			User u=uRepo.findById(userId)
+
+			return uRepo.findById(userId)
 					.orElseThrow(()-> new UserException("User with User Id "+userId+" does not exist"));
-			
-			return u;
 		}
 		else if (loggedInUser.getType().equalsIgnoreCase("user")){
 			User u=uRepo.findById(userId)
 					.orElseThrow(()-> new UserException("User with User Id "+userId+" does not exist"));
-			if(u.getUserLoginId()==loggedInUser.getUserId()) {
+			if(Objects.equals(u.getUserLoginId(), loggedInUser.getUserId())) {
 				return u;
 			}
 			else {
@@ -118,7 +107,7 @@ public class IUserServiceImpl implements IUserService{
 
 	@Override
 	public List<User> viewAllUsers(String key) throws UserException {
-		CurrentUserSession loggedInUser=srepo.findByUuid(key);
+		CurrentUserSession loggedInUser=K_repo.findByUuid(key);
 		if(loggedInUser==null) {
 			throw new UserException("Please provide a valid key to delete user.");
 		}

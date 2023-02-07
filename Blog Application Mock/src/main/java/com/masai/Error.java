@@ -1,4 +1,4 @@
-package com.masai.exception;
+package com.masai;
 
 import java.time.LocalDateTime;
 
@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class MyError {
+public class Error {
 
 	private LocalDateTime dateTime;
 	private String message;

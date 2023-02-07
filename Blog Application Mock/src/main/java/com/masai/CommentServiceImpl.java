@@ -1,19 +1,12 @@
-package com.masai.serviceimpl;
+package com.masai;
 
-
-import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.masai.entities.Comment;
-import com.masai.entities.Post;
-import com.masai.exception.CommentException;
-import com.masai.exception.PostException;
-import com.masai.repository.CommentRepository;
-import com.masai.repository.PostRepository;
-import com.masai.service.CommentService;
+import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 
 
 @Service
@@ -24,8 +17,13 @@ public class CommentServiceImpl implements CommentService{
 	
 	@Autowired
 	private CommentRepository commentRepository;
-	
-	
+
+	public CommentServiceImpl(PostRepository postRepository, CommentRepository commentRepository) {
+		this.postRepository = postRepository;
+		this.commentRepository = commentRepository;
+	}
+
+
 	@Override
 	public List<Comment> getAllComments() throws CommentException {
 		
@@ -43,9 +41,7 @@ public class CommentServiceImpl implements CommentService{
 	@Override
 	public Comment getCommentByID(Long commentId) throws CommentException {
 
-		Comment comment = commentRepository.findById(commentId).orElseThrow(()-> new CommentException("Comment not found!"));
-
-		return comment;
+		return commentRepository.findById(commentId).orElseThrow(()-> new CommentException("Comment not found!"));
 	}
 
 	@Override
@@ -108,7 +104,7 @@ public class CommentServiceImpl implements CommentService{
 
 				for(int i=0; i<post.getList().size(); i++) {
 					
-					if(post.getList().get(i).getCommentId()==commentId) {
+					if(Objects.equals(post.getList().get(i).getCommentId(), commentId)) {
 						
 						post.getList().remove(i);
 					}

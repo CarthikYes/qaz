@@ -1,4 +1,4 @@
-package com.masai.controller;
+package com.masai;
 
 import java.util.List;
 
@@ -12,10 +12,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-
-import com.masai.entities.Post;
-import com.masai.exception.PostException;
-import com.masai.serviceimpl.PostServiceImpl;
 
 @RestController
 public class PostController {

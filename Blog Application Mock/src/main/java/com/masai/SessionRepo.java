@@ -1,8 +1,8 @@
-package com.masai.repository;
+package com.masai;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.masai.entities.CurrentUserSession;
+import com.masai.CurrentUserSession;
 
 public interface SessionRepo extends JpaRepository<CurrentUserSession, Integer>{
 	

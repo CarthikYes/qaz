@@ -1,4 +1,4 @@
-package com.masai.entities;
+package com.masai;
 
 import javax.validation.constraints.NotNull;
 
